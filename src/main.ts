@@ -1,11 +1,12 @@
 import K from './kaplayCtx'
+import { mainMenu } from './scenes/mainMenu'
 
 /*----------  Loading all assets  ----------*/
 
 //Sprites
 const loadSprites = () => {
 	K.loadSprite( 'chemical-bg', 'graphics/chemical-bg.png' )
-	K.loadSprite( 'platform', 'graphics/platform.png' )
+	K.loadSprite( 'platform', 'graphics/platforms.png' )
 
 	K.loadSprite( 
 		'sonic', 
@@ -34,7 +35,7 @@ const loadSprites = () => {
 
 	K.loadSprite( 
 		'motorbug', 
-		'graphics/motorbug.png', 
+		'graphics/motobug.png', 
 		{
 			sliceX: 5, 
 			sliceY: 1,
@@ -46,7 +47,7 @@ const loadSprites = () => {
 }
 
 //Font
-const loadFonts = () => K.loadFont( 'mania', 'fonts/mania.tff' )
+const loadFonts = () => K.loadFont( 'mania', 'fonts/mania.ttf' )
 
 //Sounds
 const loadSounds = () => {
@@ -60,7 +61,7 @@ const loadSounds = () => {
 
 /*----------  Scenes  ----------*/
 const loadScenes = () => {
-	K.scene( 'main-menu', () => {} )
+	K.scene( 'main-menu', mainMenu )
 	K.scene( 'game', () => {} )
 	K.scene( 'gameover', () => {} )
 	K.go('main-menu')
