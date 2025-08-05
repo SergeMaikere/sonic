@@ -29,7 +29,7 @@ const loadSprites = () => {
 			sliceX: 16, 
 			sliceY: 1,
 			anims: {
-				spin: { from: 0, to: 16, loop: true, speed: 30 }
+				spin: { from: 0, to: 15, loop: true, speed: 30 }
 			}
 		} 
 	)
@@ -41,7 +41,7 @@ const loadSprites = () => {
 			sliceX: 5, 
 			sliceY: 1,
 			anims: {
-				run: { from: 0, to: 5, loop: true, speed: 30 }
+				run: { from: 0, to: 4, loop: true, speed: 30 }
 			}
 		} 
 	)
