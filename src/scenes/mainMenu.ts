@@ -7,28 +7,31 @@ interface BgSprites {
 	width: number
 	posY: number
 	scale: number
-	speed: number
 }
 
 export const mainMenu = () => {
 	if ( !K.getData('best-score') ) K.setData('best-score', 0)
 
-	setBackGround()
+	setBackGround(-4000)
 	setMainMenuText()
 	makeSonic(K.vec2(200, 745))
 	
 	K.onButtonPress('jump', () => K.go('game'))
 }
 
-const setBackGround = () => {
+const setBackGround = ( gameSpeed: number ) => {
 	const bg = setBgGameObject()
 	const plat = setPlatformGameObject()
-	K.onUpdate(infiniteTraveling(bg))
-	K.onUpdate(infiniteTraveling(plat))
+	K.onUpdate(
+		() => {
+			infiniteTraveling(bg, -100)
+			infiniteTraveling(plat, gameSpeed)
+		}
+	)
 }
 
-const setBgGameObject = (): BgSprites => {
-	let b = { width: 1920, posY: 0, scale: 2, speed: -100}
+export const setBgGameObject = (): BgSprites => {
+	let b = { width: 1920, posY: 0, scale: 2}
 	const bg = [
 		K.add( [K.sprite('chemical-bg'), K.pos(0, 0), K.opacity(0.8), K.scale(b.scale)] ),
 		K.add( [K.sprite('chemical-bg'), K.pos(b.width * b.scale, b.posY), K.opacity(0.8), K.scale(b.scale)] ),
@@ -36,8 +39,8 @@ const setBgGameObject = (): BgSprites => {
 	return { ...b, sprite: bg }
 }
 
-const setPlatformGameObject = (): BgSprites => {
-	let p = { width: 1280, posY: 450, scale: 4, speed: -3000 }
+export const setPlatformGameObject = (): BgSprites => {
+	let p = { width: 1280, posY: 450, scale: 4 }
 	const platforms = [
 		K.add( [K.sprite('platform'), K.pos(0, p.posY), K.scale(p.scale)] ),
 		K.add( [K.sprite('platform'), K.pos(p.width * p.scale, p.posY), K.scale(p.scale)] )
@@ -45,11 +48,9 @@ const setPlatformGameObject = (): BgSprites => {
 	return { ...p, sprite: platforms }
 }
 
-const infiniteTraveling = ( obj: BgSprites ) => {
-	return () => {
-		if ( obj.sprite[1].pos.x < 0 ) return doSwitcharoo(obj)
-		doTraveling(obj)
-	}
+export const infiniteTraveling = ( obj: BgSprites, speed: number ) => {
+	if ( obj.sprite[1].pos.x < 0 ) return doSwitcharoo(obj)
+	doTraveling(obj, speed)
 }
 
 const doSwitcharoo = ( obj: BgSprites ) => {
@@ -57,8 +58,8 @@ const doSwitcharoo = ( obj: BgSprites ) => {
 	obj.sprite.push(obj.sprite.shift() as GameObj)
 }
 
-const doTraveling = ( obj: BgSprites ) => {
-	obj.sprite[0].move(obj.speed, 0)
+const doTraveling = ( obj: BgSprites, speed: number ) => {
+	obj.sprite[0].move(speed, 0)
 	obj.sprite[1].moveTo( obj.sprite[0].pos.x + obj.width * obj.scale, obj.posY )
 }
 
