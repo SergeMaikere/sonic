@@ -34,7 +34,7 @@ const loadSprites = () => {
 	)
 
 	K.loadSprite( 
-		'motorbug', 
+		'motobug', 
 		'graphics/motobug.png', 
 		{
 			sliceX: 5, 
