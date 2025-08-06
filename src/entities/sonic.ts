@@ -1,5 +1,5 @@
 import K from '../kaplayCtx'
-import type { Vec2 } from 'kaplay'
+import type { GameObj, Vec2 } from 'kaplay'
 
 export const makeSonic = ( pos: Vec2 ) => {
 	return K.add( 
@@ -24,3 +24,4 @@ const jump = (ctx: any) => {
 	ctx.jump()
 	K.play( 'Jump', {volume: 0.5} )
 }
+

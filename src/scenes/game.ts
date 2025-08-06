@@ -2,6 +2,7 @@ import K from '../kaplayCtx'
 import { makeMotoBug } from '../entities/motobug'
 import { makeSonic } from '../entities/sonic'
 import { infiniteTraveling, setBgGameObject, setPlatformGameObject } from './mainMenu'
+import type { GameObj } from 'kaplay'
 
 export const game = () => {
 	K.setGravity(3100)
@@ -20,7 +21,6 @@ export const game = () => {
 
 	setSolidPlatform()
 	setSonic()
-	
 	const spawnMotobug = () => {
 		const motobug = makeMotoBug(K.vec2(1950, 775))
 		motobug.onUpdate(
@@ -50,4 +50,23 @@ const setSonic = () => {
 	const sonic =  makeSonic(K.vec2(200, 745))
 	sonic.setControls()
 	sonic.setEvent()
+	sonic.onCollide( 'enemy', (enemy: GameObj) => setCollision(sonic, enemy) )
+}
+
+const setCollision = ( sonic: GameObj, enemy: GameObj ) => {
+	if ( !sonic.isGrounded() ) return rebound(sonic, enemy)
+	gameover()
+}
+
+const rebound = ( sonic: GameObj, enemy: GameObj ) => {
+	sonic.play('jump')
+	sonic.jump()
+	K.play( 'Destroy', {volume: 0.5} )
+	K.play( 'HyperRing', {volume: 0.5} )
+	K.destroy(enemy)
+}
+
+const gameover = () => {
+	K.play('Hurt', {volume: 0.5})
+	K.go('gameover')
 }
