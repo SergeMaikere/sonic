@@ -27,5 +27,4 @@ export default class Score {
 		this.score = 0
 		this.updateScore()
 	}
-
 }
