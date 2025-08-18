@@ -3,20 +3,21 @@ import type { GameObj } from 'kaplay'
 import { makeMotoBug } from '../entities/motobug'
 import { makeSonic } from '../entities/sonic'
 import { makeRing } from '../entities/ring'
-import Background from '../utils/background'
+import Background, { setSolidPlatform } from '../utils/background'
 import Score from '../utils/score'
 
 export const game = () => {
 
 	const backgroundHandler = new Background(3100)
 	backgroundHandler.setSpeedVariation(50)
-	backgroundHandler.setSolidPlatform()
 	backgroundHandler.setInfiniteTraveling()
 	backgroundHandler.spawnEntity( makeMotoBug, {x: 1950, y: 775}, {min: 0.5, max: 2.5} ) 
 	backgroundHandler.spawnEntity( makeRing, {x: 1950, y: 765}, {min: 0.5, max: 3} ) 
 	
 	const scoreText = K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
 	const scoreHandler = new Score(scoreText)
+	
+	setSolidPlatform()
 	setSonic(scoreHandler)
 }
 
