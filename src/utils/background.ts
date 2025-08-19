@@ -1,6 +1,12 @@
 import type { GameObj } from "kaplay"
 import K from "../kaplayCtx"
-import type { BgSprites } from "../scenes/mainMenu"
+
+interface BgSprites {
+	sprite: GameObj[]
+	width: number
+	posY: number
+	scale: number
+}
 
 export default class Background {
 
@@ -19,8 +25,6 @@ export default class Background {
 	}
 
 	setSpeedVariation = ( variation: number ) => K.loop(1, () => this.gameSpeed -= variation)
-
-	setSolidPlatform = () => K.add( [K.rect(1920, 300), K.pos(0, 832), K.area(), K.body({isStatic: true}), K.opacity(0)] )
 
 	setInfiniteTraveling = () => {
 		K.onUpdate(
@@ -54,6 +58,8 @@ export default class Background {
 		mySpawn()
 	}
 } 
+
+export const setSolidPlatform = () => K.add( [K.rect(1920, 300), K.pos(0, 832), K.area(), K.body({isStatic: true}), K.opacity(0)] )
 
 export const infiniteTraveling = ( obj: BgSprites, speed: number ) => {
 	if ( obj.sprite[1].pos.x < 0 ) return doSwitcharoo(obj)

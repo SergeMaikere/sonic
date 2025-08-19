@@ -1,5 +1,6 @@
 import K from './kaplayCtx'
 import { game } from './scenes/game'
+import { gameover } from './scenes/gameover'
 import { mainMenu } from './scenes/mainMenu'
 
 /*----------  Loading all assets  ----------*/
@@ -64,7 +65,7 @@ const loadSounds = () => {
 const loadScenes = () => {
 	K.scene( 'main-menu', mainMenu )
 	K.scene( 'game', game )
-	K.scene( 'gameover', () => {} )
+	K.scene( 'gameover', gameover )
 	K.go('main-menu')
 }
 
