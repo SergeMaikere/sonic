@@ -12,7 +12,8 @@ export const makeSonic = ( pos: Vec2 ) => {
 			K.body( {jumpForce: 1400} ),
 			{
 				setControls () { K.onButtonPress('jump', () => jump(this)) }, 
-				setEvent () { (this as any).onGround(() => (this as any).play('run')) }
+				setEvent () { (this as any).onGround(() => (this as any).play('run')) },
+				ringCollectUI: null
 			}
 		] 
 	)

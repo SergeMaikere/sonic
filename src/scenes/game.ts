@@ -25,8 +25,20 @@ const setSonic = ( scoreHandler: Score ) => {
 	const sonic =  makeSonic(K.vec2(200, 745))
 	sonic.setControls()
 	sonic.setEvent()
+	setRingCollectionUI(sonic)
 	sonic.onCollide( 'enemy', (enemy: GameObj) => setEnemyCollision(sonic, enemy, scoreHandler) )
-	sonic.onCollide( 'ring', (ring: GameObj) => setRingCollision(ring, scoreHandler) )
+	sonic.onCollide( 'ring', (ring: GameObj) => setRingCollision(sonic, ring, scoreHandler) )
+}
+
+const setRingCollectionUI = ( sonic: GameObj ) => {
+	sonic.ringCollectUI = sonic.add(
+		[
+			K.anchor('center'),
+			K.pos(30, -10),
+			K.text('', {font: 'mania', size: 12}),
+			K.color(255, 255, 0)
+		]
+	)
 }
 
 const setEnemyCollision = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
@@ -41,6 +53,8 @@ const rebound = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
 	K.play( 'HyperRing', {volume: 0.5} )
 	K.destroy(enemy)
 	scoreHandler.onRebound()
+	if ( scoreHandler.multiplier === 1 ) return displayRingCollectUI(sonic, '+10')
+	displayRingCollectUI(sonic, `X${scoreHandler.multiplier}`)
 }
 
 const gameover = ( scoreHandler: Score ) => {
@@ -49,8 +63,14 @@ const gameover = ( scoreHandler: Score ) => {
 	K.go('gameover')
 }
 
-const setRingCollision = ( ring: GameObj, scoreHandler: Score ) => {
+const setRingCollision = ( sonic: GameObj, ring: GameObj, scoreHandler: Score ) => {
 	K.play('Ring', {volume: 0.5})
 	K.destroy(ring)
 	scoreHandler.onRingCollection()
+	displayRingCollectUI(sonic, '+1')
+}
+
+const displayRingCollectUI = ( sonic: GameObj, gain: string ) => {
+	sonic.ringCollectUI.text = gain
+	K.wait( 1, () => sonic.ringCollectUI.text = '' )
 }

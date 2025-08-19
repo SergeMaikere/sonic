@@ -1,12 +1,23 @@
 import type { GameObj } from "kaplay"
 
 export default class Score {
+	static instance: Score
 
-	private score: number = 0
-	private multiplier: number = 0
-	private scoreText: GameObj
+	rankGrades: string[] = [ 'F', 'E', 'D', 'C', 'B', 'A', 'S' ]
+	rankValues: number[] = [ 50, 80, 100, 200, 300, 400, 500 ]
+
+	bestRank: string = 'F'
+	rank: string = 'F'
+
+	bestScore: number = 0
+	score: number = 0
+
+	multiplier: number = 0
+	private scoreText!: GameObj
 
 	constructor ( scoreText: GameObj ) {
+		if ( Score.instance ) return Score.instance
+		Score.instance = this
 		this.scoreText = scoreText
 	}
 
