@@ -1,5 +1,5 @@
 import K from '../kaplayCtx'
-import type { GameObj } from 'kaplay'
+import type { AudioPlay, GameObj } from 'kaplay'
 import { makeMotoBug } from '../entities/motobug'
 import { makeSonic } from '../entities/sonic'
 import { makeRing } from '../entities/ring'
@@ -7,26 +7,24 @@ import Background, { setSolidPlatform } from '../utils/background'
 import Score from '../utils/score'
 
 export const game = () => {
+	const citySfx = K.play('city', {volume: 0.2})
 
 	const backgroundHandler = new Background(3100)
 	backgroundHandler.setSpeedVariation(50)
 	backgroundHandler.setInfiniteTraveling()
 	backgroundHandler.spawnEntity( makeMotoBug, {x: 1950, y: 775}, {min: 0.5, max: 2.5} ) 
 	backgroundHandler.spawnEntity( makeRing, {x: 1950, y: 765}, {min: 0.5, max: 3} ) 
-	
-	const scoreText = K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
-	const scoreHandler = new Score(scoreText)
-	
+		
 	setSolidPlatform()
-	setSonic(scoreHandler)
+	setSonic(new Score, citySfx)
 }
 
-const setSonic = ( scoreHandler: Score ) => {
+const setSonic = ( scoreHandler: Score, citySfx: AudioPlay ) => {
 	const sonic =  makeSonic(K.vec2(200, 745))
 	sonic.setControls()
 	sonic.setEvent()
 	setRingCollectionUI(sonic)
-	sonic.onCollide( 'enemy', (enemy: GameObj) => setEnemyCollision(sonic, enemy, scoreHandler) )
+	sonic.onCollide( 'enemy', (enemy: GameObj) => setEnemyCollision(sonic, enemy, scoreHandler, citySfx) )
 	sonic.onCollide( 'ring', (ring: GameObj) => setRingCollision(sonic, ring, scoreHandler) )
 }
 
@@ -41,9 +39,9 @@ const setRingCollectionUI = ( sonic: GameObj ) => {
 	)
 }
 
-const setEnemyCollision = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
+const setEnemyCollision = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score, citySfx: AudioPlay ) => {
 	if ( !sonic.isGrounded() ) return rebound(sonic, enemy, scoreHandler)
-	gameover(scoreHandler)
+	gameover(scoreHandler, citySfx)
 }
 
 const rebound = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
@@ -57,10 +55,10 @@ const rebound = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
 	displayRingCollectUI(sonic, `X${scoreHandler.multiplier}`)
 }
 
-const gameover = ( scoreHandler: Score ) => {
+const gameover = ( scoreHandler: Score, citySfx: AudioPlay ) => {
 	K.play('Hurt', {volume: 0.5})
 	scoreHandler.onEnemyCollision()
-	K.go('gameover')
+	K.go('gameover', {citySfx})
 }
 
 const setRingCollision = ( sonic: GameObj, ring: GameObj, scoreHandler: Score ) => {

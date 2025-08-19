@@ -1,10 +1,18 @@
 import type { GameObj } from "kaplay"
+import K from '../kaplayCtx'
 
 export default class Score {
-	static instance: Score
+	static instance: Score | null = null
 
-	rankGrades: string[] = [ 'F', 'E', 'D', 'C', 'B', 'A', 'S' ]
-	rankValues: number[] = [ 50, 80, 100, 200, 300, 400, 500 ]
+	rankGrades: {r: string, v: number}[] = [ 
+		{r: 'F', v: 50}, 
+		{r: 'E', v: 80}, 
+		{r: 'D', v: 100}, 
+		{r: 'C', v: 200}, 
+		{r: 'B', v: 300}, 
+		{r: 'A', v: 400}, 
+		{r: 'S', v: 500}
+	]
 
 	bestRank: string = 'F'
 	rank: string = 'F'
@@ -13,15 +21,17 @@ export default class Score {
 	score: number = 0
 
 	multiplier: number = 0
-	private scoreText!: GameObj
+	private scoreText: GameObj = K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
 
-	constructor ( scoreText: GameObj ) {
+	constructor ( ) {
 		if ( Score.instance ) return Score.instance
 		Score.instance = this
-		this.scoreText = scoreText
 	}
 
-	updateScore = () => this.scoreText.text = `SCORE: ${this.score}`
+	updateScore = () => {
+		this.scoreText.text = `SCORE: ${this.score}`
+		if ( this.score > this.bestScore ) this.bestScore = this.score
+	}
 
 	onRebound = () => {
 		this.multiplier += 1
@@ -35,7 +45,7 @@ export default class Score {
 	}
 
 	onEnemyCollision = () => {
-		this.score = 0
+		this.multiplier = 0
 		this.updateScore()
 	}
 }
