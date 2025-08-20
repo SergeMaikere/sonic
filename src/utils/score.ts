@@ -1,27 +1,51 @@
 import type { GameObj } from "kaplay"
+import K from '../kaplayCtx'
+
+type RankGrade = { 
+	rank: string 
+	value: number
+}
 
 export default class Score {
-	static instance: Score
 
-	rankGrades: string[] = [ 'F', 'E', 'D', 'C', 'B', 'A', 'S' ]
-	rankValues: number[] = [ 50, 80, 100, 200, 300, 400, 500 ]
+	rankGrades: RankGrade[] = [ 
+		{rank: 'F', value: 50}, 
+		{rank: 'E', value: 80}, 
+		{rank: 'D', value: 100}, 
+		{rank: 'C', value: 200}, 
+		{rank: 'B', value: 300}, 
+		{rank: 'A', value: 400}, 
+		{rank: 'S', value: 500}
+	]
 
-	bestRank: string = 'F'
-	rank: string = 'F'
-
-	bestScore: number = 0
+	bestScore: number = K.getData('best-score') || 0
 	score: number = 0
-
 	multiplier: number = 0
-	private scoreText!: GameObj
 
-	constructor ( scoreText: GameObj ) {
-		if ( Score.instance ) return Score.instance
-		Score.instance = this
-		this.scoreText = scoreText
+	private isGame: boolean = true
+	private scoreText: GameObj | null = null
+
+	constructor ( isGame: boolean ) {
+		this.isGame = isGame
+		this.scoreText = this.isGame ? this.setsCoreText() : null
+		this.score = this.isGame ? 0 : K.getData('current-score') || 0
 	}
 
-	updateScore = () => this.scoreText.text = `SCORE: ${this.score}`
+	private setsCoreText = () => K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
+
+	getRank ( score: number ) {
+		return this.rankGrades.reduce( 
+			(acc: RankGrade, rg: RankGrade) => {
+				if ( rg.value < score && rg.value > acc.value ) acc = rg
+				return acc
+			}
+		).rank
+	}
+
+	updateScore = () => {
+		this.scoreText!.text = `SCORE: ${this.score}`
+		if ( this.score > this.bestScore ) this.bestScore = this.score
+	}
 
 	onRebound = () => {
 		this.multiplier += 1
@@ -35,7 +59,14 @@ export default class Score {
 	}
 
 	onEnemyCollision = () => {
-		this.score = 0
+		this.multiplier = 0
 		this.updateScore()
 	}
+
+	setBestScore = () => {
+		if ( this.score < this.bestScore ) return
+		K.setData('best-score', this.score)
+	}
+
+	setCurrentScore = () => K.setData('current-score', this.score)
 }
