@@ -1,9 +1,14 @@
 import type { GameObj } from "kaplay"
 import K from '../kaplayCtx'
 
+type RankGrade = { 
+	rank: string 
+	value: number
+}
+
 export default class Score {
 
-	rankGrades: {rank: string, value: number}[] = [ 
+	rankGrades: RankGrade[] = [ 
 		{rank: 'F', value: 50}, 
 		{rank: 'E', value: 80}, 
 		{rank: 'D', value: 100}, 
@@ -28,9 +33,13 @@ export default class Score {
 
 	private setsCoreText = () => K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
 
-	
 	getRank ( score: number ) {
-		return this.rankGrades.filter( rg => rg.value >= score )[0].rank || 'S'
+		return this.rankGrades.reduce( 
+			(acc: RankGrade, rg: RankGrade) => {
+				if ( rg.value < score && rg.value > acc.value ) acc = rg
+				return acc
+			}
+		).rank
 	}
 
 	updateScore = () => {

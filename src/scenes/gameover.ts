@@ -12,13 +12,9 @@ export const gameover = ( citySfx: AudioPlay ) => {
 	setText('GAME OVER', 96, K.vec2(K.center().x, K.center().y - 300))
 	setText(`BEST SCORE : ${bestScore}`, 64, K.vec2(K.center().x - 400, K.center().y - 200))
 	setText(`CURRENT SCORE : ${currentScore}`, 64, K.vec2(K.center().x + 400, K.center().y - 200))
-	setText('GOGO NIWE !', 96, K.vec2(K.center()))
-	setText('Want to try again ?', 64, K.vec2(K.center().x, K.center().y + 100))
-	setText('Press space/Click/To try again', 32, K.vec2(K.center().x, K.center().y + 200))
 	setRankBox(scoreHandler.getRank(bestScore), K.vec2(K.center().x - 400, K.center().y + 50))
 	setRankBox(scoreHandler.getRank(currentScore), K.vec2(K.center().x + 400, K.center().y + 50))
-
-	K.onButtonPress('jump', () => {scoreHandler.score = 0; K.go('main-menu')})
+	setRetryOption(scoreHandler)
 }
 
 const setRankBox = ( rank: string, pos: Vec2) => {
@@ -38,4 +34,9 @@ const setRankBox = ( rank: string, pos: Vec2) => {
 			K.anchor('center')
 		]
 	)
+}
+
+const setRetryOption = ( scoreHandler: Score ) => {
+	K.wait( 1, () => setText('Press space/Click/Touch to play', 32, K.vec2(K.center().x, K.center().y + 350)) )
+	K.onButtonPress('jump', () => {scoreHandler.score = 0; K.go('main-menu')})
 }
