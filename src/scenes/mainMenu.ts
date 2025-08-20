@@ -5,6 +5,7 @@ import { setText } from '../utils/textArea'
 
 export const mainMenu = () => {
 	if ( !K.getData('best-score') ) K.setData('best-score', 0)
+	if ( !K.getData('current-score') ) K.setData('current-score', 0)
 
 	setBackGround(-4000)
 	setText('SONIC RING RUN', 32, K.vec2(K.center().x, 200))

@@ -16,7 +16,7 @@ export const game = () => {
 	backgroundHandler.spawnEntity( makeRing, {x: 1950, y: 765}, {min: 0.5, max: 3} ) 
 		
 	setSolidPlatform()
-	setSonic(new Score, citySfx)
+	setSonic(new Score(true), citySfx)
 }
 
 const setSonic = ( scoreHandler: Score, citySfx: AudioPlay ) => {
@@ -58,6 +58,8 @@ const rebound = ( sonic: GameObj, enemy: GameObj, scoreHandler: Score ) => {
 const gameover = ( scoreHandler: Score, citySfx: AudioPlay ) => {
 	K.play('Hurt', {volume: 0.5})
 	scoreHandler.onEnemyCollision()
+	scoreHandler.setBestScore()
+	scoreHandler.setCurrentScore()
 	K.go('gameover', {citySfx})
 }
 
