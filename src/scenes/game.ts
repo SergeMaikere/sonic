@@ -7,7 +7,7 @@ import Background, { setSolidPlatform } from '../utils/background'
 import Score from '../utils/score'
 
 export const game = () => {
-	const citySfx = K.play('city', {volume: 0.2})
+	const citySfx = K.play('city', {volume: 0.3})
 
 	const backgroundHandler = new Background(3100)
 	backgroundHandler.setSpeedVariation(50)
