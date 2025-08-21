@@ -54,6 +54,7 @@ const loadFonts = () => K.loadFont( 'mania', 'fonts/mania.ttf' )
 //Sounds
 const loadSounds = () => {
 	K.loadSound( 'city', 'sounds/city.mp3' )
+	K.loadSound( 'lost', 'sounds/lost.mp3' )
 	K.loadSound( 'Destroy', 'sounds/Destroy.wav' )
 	K.loadSound( 'Hurt', 'sounds/Hurt.wav' )
 	K.loadSound( 'HyperRing', 'sounds/HyperRing.wav' )
