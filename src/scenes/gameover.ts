@@ -1,10 +1,9 @@
-import type { AudioPlay, Vec2 } from 'kaplay'
+import type { Vec2 } from 'kaplay'
 import K from '../kaplayCtx'
 import { setText } from '../utils/textArea'
 import Score from '../utils/score';
 
-export const gameover = ( citySfx: AudioPlay ) => {
-	citySfx.paused = true;
+export const gameover = () => {
 	const scoreHandler = new Score(false)
 	const bestScore = scoreHandler.bestScore
 	const currentScore = scoreHandler.score

@@ -60,6 +60,7 @@ const gameover = ( scoreHandler: Score, citySfx: AudioPlay ) => {
 	scoreHandler.onEnemyCollision()
 	scoreHandler.setBestScore()
 	scoreHandler.setCurrentScore()
+	citySfx.stop()
 	K.go('gameover', {citySfx})
 }
 

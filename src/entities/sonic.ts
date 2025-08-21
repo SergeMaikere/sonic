@@ -21,7 +21,7 @@ export const makeSonic = ( pos: Vec2 ) => {
 
 const jump = (ctx: any) => {
 	if ( !ctx.isGrounded() ) return
-	ctx.play('jump')
+	ctx.play('jump')	
 	ctx.jump()
 	K.play( 'Jump', {volume: 0.5} )
 }
