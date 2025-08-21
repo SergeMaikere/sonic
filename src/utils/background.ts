@@ -10,13 +10,12 @@ interface BgSprites {
 
 export default class Background {
 
-	private gravity: number = 0
 	private gameSpeed: number = -300
 	private background: BgSprites = setBgGameObject()
 	private platform: BgSprites = setPlatformGameObject()
 
 	constructor ( gravity: number ) {
-		this.gravity = this.setGravity(gravity)
+		this.setGravity(gravity)
 	}
 
 	private setGravity = ( gravity: number ) => {
