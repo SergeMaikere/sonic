@@ -37,5 +37,5 @@ const setRankBox = ( rank: string, pos: Vec2) => {
 
 const setRetryOption = ( scoreHandler: Score ) => {
 	K.wait( 1, () => setText('Press space/Click/Touch to play', 32, K.vec2(K.center().x, K.center().y + 350)) )
-	K.onButtonPress('jump', () => {scoreHandler.score = 0; K.go('main-menu')})
+	K.onButtonPress('continue', () => {scoreHandler.score = 0; K.go('main-menu')})
 }

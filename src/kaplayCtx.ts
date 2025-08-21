@@ -12,7 +12,11 @@ export const K = kaplay(
             jump: {
                 keyboard: [ 'space' ],
                 mouse: 'left'
-            }
+            },
+            continue: { 
+                keyboard: ['enter'] ,
+                mouse: 'left'
+            },
         },
         debugKey: 'd',
         debug: true
