@@ -18,6 +18,8 @@ export default class Score {
 		{rank: 'S', value: 500}
 	]
 
+	bestPlayer: string
+
 	bestScore: number = K.getData('best-score') || 0
 	score: number = 0
 	multiplier: number = 0
@@ -29,6 +31,7 @@ export default class Score {
 		this.isGame = isGame
 		this.scoreText = this.isGame ? this.setsCoreText() : null
 		this.score = this.isGame ? 0 : K.getData('current-score') || 0
+		this.bestPlayer = K.getData('best-player') || 'TONTON SERGE'
 	}
 
 	private setsCoreText = () => K.add( [K.text("SCORE: 0", {font: 'mania', size: 72}), K.pos(20, 20)] )
@@ -66,6 +69,7 @@ export default class Score {
 	setBestScore = () => {
 		if ( this.score < this.bestScore ) return
 		K.setData('best-score', this.score)
+		K.setData('best-player', K.getData('current-player'))
 	}
 
 	setCurrentScore = () => K.setData('current-score', this.score)
