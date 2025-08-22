@@ -38,7 +38,7 @@ const setRankBox = ( rank: string, pos: Vec2) => {
 }
 
 const setRetryOption = ( scoreHandler: Score, sfx: AudioPlay ) => {
-	K.wait( 1, () => setText('Press space/Click/Touch to play', 32, K.vec2(K.center().x, K.center().y + 350)) )
+	K.wait( 1, () => setText('Press Enter/Click/Touch to play', 32, K.vec2(K.center().x, K.center().y + 350)) )
 	K.onButtonPress(
 		'continue', 
 		() => {
