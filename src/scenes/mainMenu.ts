@@ -5,14 +5,14 @@ import { setText } from '../utils/textArea'
 
 export const mainMenu = () => {
 	if ( !K.getData('best-score') ) K.setData('best-score', 0)
-	if ( !K.getData('current-score') ) K.setData('current-score', 0)
+	K.setData('current-score', 0)
 
 	setBackGround(-4000)
-	setText('SONIC RING RUN', 32, K.vec2(K.center().x, 200))
-	setText('Press space/Click/Touch to play', 32, K.vec2(K.center().x, K.center().y - 200))
+	setText('SONIC RING RUN', 96, K.vec2(K.center().x, 200))
+	setText('Press Enter/Click/Touch to play', 64, K.vec2(K.center().x, K.center().y - 200))
 	makeSonic(K.vec2(200, 745))
 	
-	K.onButtonPress('jump', () => K.go('game'))
+	K.onButtonPress('continue', () => K.go('select-player'))
 }
 
 const setBackGround = ( gameSpeed: number ) => {
