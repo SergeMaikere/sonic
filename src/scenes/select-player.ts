@@ -1,7 +1,7 @@
 import K from '../kaplayCtx'
 import type { GameObj } from 'kaplay'
 import { setText, setTextBox } from '../utils/textArea'
-import { isEven, setOnClick } from '../utils/helper'
+import { setOnClick } from '../utils/helper'
 
 export const selectPlayer = () => {
 	const tag = 'players'
