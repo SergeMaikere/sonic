@@ -6,7 +6,7 @@ import { setText } from '../utils/textArea'
 export const mainMenu = () => {
 	if ( !K.getData('best-score') ) K.setData('best-score', 0)
 	K.setData('current-score', 0)
-	K.setFullscreen(true)
+
 	setBackGround(-4000)
 	setText('SONIC RING RUN', 96, K.vec2(K.center().x, 200))
 	setText('Press Enter/Click/Touch to play', 64, K.vec2(K.center().x, K.center().y - 200))
