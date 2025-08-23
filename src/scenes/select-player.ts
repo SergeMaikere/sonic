@@ -6,7 +6,7 @@ import { isEven, setOnClick } from '../utils/helper'
 export const selectPlayer = () => {
 	const tag = 'players'
 	setText('Select Player', 96, K.vec2(K.center().x, K.center().y - 300))
-	let players = setTextBoxPlayers(['ISANGO', 'NIWE'], 400)
+	let players = setTextBoxPlayers(['ISANGO', 'NIWE', 'TONTON SERGE'], 600)
 	setTag(tag, players)
 	setOnClick(tag, select)
 }
@@ -21,7 +21,7 @@ const select = ( player: GameObj ) => {
 const setTextBoxPlayers = ( names: string[], x: number ) => {
 	return names.map(
 		( name, i ) => {
-			return setTextBox(name, K.vec2(K.center().x + (isEven(i) ? - x : x), K.center().y + 100), 64)
+			return setTextBox(name, K.vec2(K.center().x - x + 600 * i, K.center().y + 100), 64)
 		}
 	)
 }
